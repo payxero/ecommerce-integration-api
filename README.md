@@ -14,6 +14,6 @@ cd ./ecommerce-integration-api
 npm install
 ```
 
-## Running the service
+## Run the service
 
 Run `nest start` to start the service, who will be listening through the port `http://localhost:3000`.
