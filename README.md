@@ -1,6 +1,5 @@
 # ecommerce-integration-api
-This is an backend application to demonstrate using Intern with Angular 4+. It contains all of the specs from Angular's test guide as well as some extras. Specs have been reformatted and converted to using Intern best practices as outlined below.
-
+This is a backend application needed to run our client application.
 
 ## Get the Code
 Clone the repo.
