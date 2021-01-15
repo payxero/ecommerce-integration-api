@@ -14,10 +14,10 @@ export class AppService {
     hash: string;
 
     constructor(private readonly http: HttpService) {
-        this.url = 'https://api.zerospay.com/v1/payment/api/charge';
-        this.username = 'jlborrero@gmail.com';
-        this.password = '1qazxsw2';
-        this.hash = 'YJU56X2NKLVBFLHGEA7J';
+        this.url = 'https://api.paywithzero.net/v1/payment/api/charge';
+        this.username = 'support@zerosurcharging.com';
+        this.password = 'demo123';
+        this.hash = 'CBJPES59WLFCYP3X2RAG';
     }
 
     paymentCharge(charge: any): Observable<any> {
@@ -29,7 +29,13 @@ export class AppService {
             },
         };
 
-        return this.http.post(this.url, charge, options)
-            .pipe(map(response => response.data));
+        try {
+            return this.http.post(this.url, charge, options)
+                .pipe(map(response => response.data));
+        } catch (e) {
+            throw new Error(e);
+        }
+
+
     }
 }
