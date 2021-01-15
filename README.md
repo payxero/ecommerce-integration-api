@@ -16,4 +16,4 @@ npm install
 
 ## Running the service
 
-Run `nest start` run npm i to start the service, who will be listening through the port `http://localhost:3000`.
+Run `nest start` to start the service, who will be listening through the port `http://localhost:3000`.
