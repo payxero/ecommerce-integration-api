@@ -10,4 +10,19 @@ export class AppController {
     return await this.appService.paymentCharge(chargeDto);
   }
 
+  @Post('/charge-webhook')
+  async chargeCallWebook(@Body() paymentDto: any): Promise<any> {
+    return await this.appService.webhook(paymentDto);
+  }
+
+  @Post('/void-webhook')
+  async voidCallWebook(@Body() paymentDto: any): Promise<any> {
+    return await this.appService.webhook(paymentDto);
+  }
+
+  @Post('/refund-webhook')
+  async refundCallWebook(@Body() paymentDto: any): Promise<any> {
+    return await this.appService.webhook(paymentDto);
+  }
+
 }

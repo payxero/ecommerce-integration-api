@@ -1,4 +1,4 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable, HttpService, HttpException } from '@nestjs/common';
 
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ export class AppService {
     username: string;
     password: string;
     hash: string;
+    payment: any;
 
     constructor(private readonly http: HttpService) {
         this.url = 'https://api.paywithzero.net/v1/payment/api/charge';
@@ -35,7 +36,11 @@ export class AppService {
         } catch (e) {
             throw new Error(e);
         }
+    }
 
-
+    // This will only be called if the external payment api is being run locally and have webhooks paths pointing to this local service
+    webhook(payment): Observable<any> {
+        this.payment = payment;
+        throw new HttpException('Succses webhook call', 200);
     }
 }
