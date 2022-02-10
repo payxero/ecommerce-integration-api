@@ -1,6 +1,5 @@
 import { Injectable, HttpService, HttpException } from '@nestjs/common';
-import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AxiosRequestConfig } from 'axios';
 import * as base64 from 'base-64';
 
@@ -19,7 +18,7 @@ export class AppService {
     this.hash = 'CBJPES59WLFCYP3X2RAG';
   }
 
-  paymentCharge(charge: any): Observable<any> {
+  async paymentCharge(charge: any): Promise<any> {
     // This is comming from our javascript integration sample application
     if (charge.jsonDataInput) {
       charge = JSON.parse(charge.jsonDataInput);
@@ -36,11 +35,13 @@ export class AppService {
     };
 
     try {
-      return this.http
+      const { data } = await this.http
         .post(this.url, charge, options)
-        .pipe(map((response) => response.data));
-    } catch (e) {
-      throw e;
+        .toPromise();
+
+      return data;
+    } catch (error) {
+      throw new Error(error.response.data.message || error);
     }
   }
 
