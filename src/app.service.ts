@@ -12,10 +12,10 @@ export class AppService {
   payment: any;
 
   constructor(private readonly http: HttpService) {
-    this.url = 'https://api.paywithzero.net/v1/public/payment/charge';
+    this.url = 'https://api.paywithzero.net/v1/public/payment';
     this.username = 'support@zerosurcharging.com';
-    this.password = '@Prospay123';
-    this.hash = 'CBJPES59WLFCYP3X2RAG';
+    this.password = 'demo123*';
+    this.hash = 'BL2H6LGNEUGSXTBARA59';
   }
 
   async paymentCharge(charge: any): Promise<any> {
@@ -24,6 +24,20 @@ export class AppService {
       charge = JSON.parse(charge.jsonDataInput);
     }
 
+    const dataSend = {
+      "amount": charge.amount,
+      "contact": charge.contact,
+      "billingAddress": charge.billingAddress,
+      "shippingAddress": charge.shippingAddress,
+      "order": charge.order,
+      "capture": true,
+      "card": {
+        "name": charge.card.name,
+        "number": charge.card.number,
+        "paymentToken": charge.card.paymentToken
+      },
+      "sendReceipt": true
+    }
     const basicAuth = `Basic ${base64.encode(
       `${this.username}:${this.password}`,
     )}`;
@@ -36,7 +50,38 @@ export class AppService {
 
     try {
       const { data } = await this.http
-        .post(this.url, charge, options)
+        .post(`${this.url}/charge`, dataSend, options)
+        .toPromise();
+
+      return data;
+    } catch (error) {
+      throw new Error(error.response.data.message || error);
+    }
+  }
+
+
+  async paymentRate(rate: any): Promise<any> {
+    // This is comming from our javascript integration sample application
+    if (rate.jsonDataInput) {
+      rate = JSON.parse(rate.jsonDataInput);
+    }
+
+    const basicAuth = `Basic ${base64.encode(
+      `${this.username}:${this.password}`,
+    )}`;
+    const options: AxiosRequestConfig = {
+      headers: {
+        authorization: basicAuth,
+        'key-hash': this.hash,
+      },
+      params: {
+        ...rate
+      }
+    };
+
+    try {
+      const { data } = await this.http
+        .get(`${this.url}/rate`, options)
         .toPromise();
 
       return data;
