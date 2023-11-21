@@ -13,9 +13,9 @@ export class AppService {
 
   constructor(private readonly http: HttpService) {
     this.url = 'https://api.paywithzero.net/v1/public/payment';
-    this.username = 'support@zerosurcharging.com';
-    this.password = 'demo123*';
-    this.hash = 'BL2H6LGNEUGSXTBARA59';
+    this.username = 'integration@strictlyzero.com';
+    this.password = 'jN!&9rd2rfqzUKAWsp8FYj';
+    this.hash = 'QRZQG3J6QMQ6D44HDG7F';
   }
 
   async paymentCharge(charge: any): Promise<any> {
